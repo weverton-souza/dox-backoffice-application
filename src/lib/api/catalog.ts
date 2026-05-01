@@ -1,5 +1,31 @@
 import { apiFetch, readProblemDetail } from "@/lib/api/client";
 
+export interface AdminBundleListItem {
+  id: string;
+  name: string;
+  description: string | null;
+  modules: string[];
+  priceMonthlyCents: number;
+  priceYearlyCents: number;
+  seatsIncluded: number;
+  trackingSlotsIncluded: number;
+  highlighted: boolean;
+  active: boolean;
+  sortOrder: number;
+  updatedAt: string | null;
+}
+
+export interface UpdateBundleRequest {
+  priceMonthlyCents?: number | null;
+  priceYearlyCents?: number | null;
+  description?: string | null;
+  seatsIncluded?: number | null;
+  trackingSlotsIncluded?: number | null;
+  highlighted?: boolean | null;
+  sortOrder?: number | null;
+  notes?: string | null;
+}
+
 export interface AdminModuleListItem {
   moduleId: string;
   displayName: string;
@@ -54,4 +80,22 @@ export async function listModulePriceHistory(
   );
   if (!response.ok) throw await readProblemDetail(response);
   return (await response.json()) as AdminModulePriceResponse[];
+}
+
+export async function listCatalogBundles(): Promise<AdminBundleListItem[]> {
+  const response = await apiFetch("/admin/catalog/bundles");
+  if (!response.ok) throw await readProblemDetail(response);
+  return (await response.json()) as AdminBundleListItem[];
+}
+
+export async function updateBundle(
+  bundleId: string,
+  body: UpdateBundleRequest,
+): Promise<AdminBundleListItem> {
+  const response = await apiFetch(`/admin/catalog/bundles/${bundleId}`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw await readProblemDetail(response);
+  return (await response.json()) as AdminBundleListItem;
 }
