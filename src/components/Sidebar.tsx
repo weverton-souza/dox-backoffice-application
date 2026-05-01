@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Users } from "lucide-react";
+import { Package, Users } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Tenants", href: "/tenants", icon: Users },
+  { label: "Catálogo", href: "/catalog", icon: Package },
 ];
 
 export default function Sidebar() {
