@@ -37,7 +37,7 @@ export async function logoutAdmin(): Promise<void> {
 
 export async function fetchAdminMe(): Promise<AdminMeResponse | null> {
   const response = await apiFetch("/admin/auth/me");
-  if (response.status === 401) return null;
+  if (response.status === 401 || response.status === 404) return null;
   if (!response.ok) throw await readProblemDetail(response);
   return (await response.json()) as AdminMeResponse;
 }
