@@ -1,5 +1,32 @@
 import { apiFetch, readProblemDetail } from "@/lib/api/client";
 
+export type AddonType = "MODULE" | "SLOT_QUOTA" | "SEAT_QUOTA" | "PERCENTAGE_FEE";
+
+export interface AdminAddonListItem {
+  id: string;
+  name: string;
+  description: string | null;
+  type: AddonType;
+  targetModuleId: string | null;
+  priceMonthlyCents: number;
+  priceUnitCents: number | null;
+  feePercentage: string | null;
+  availableForBundles: string[];
+  active: boolean;
+  sortOrder: number;
+  updatedAt: string | null;
+}
+
+export interface UpdateAddonRequest {
+  priceMonthlyCents?: number | null;
+  priceUnitCents?: number | null;
+  feePercentage?: string | null;
+  active?: boolean | null;
+  availableForBundles?: string[] | null;
+  sortOrder?: number | null;
+  notes?: string | null;
+}
+
 export interface AdminBundleListItem {
   id: string;
   name: string;
@@ -98,4 +125,22 @@ export async function updateBundle(
   });
   if (!response.ok) throw await readProblemDetail(response);
   return (await response.json()) as AdminBundleListItem;
+}
+
+export async function listCatalogAddons(): Promise<AdminAddonListItem[]> {
+  const response = await apiFetch("/admin/catalog/addons");
+  if (!response.ok) throw await readProblemDetail(response);
+  return (await response.json()) as AdminAddonListItem[];
+}
+
+export async function updateAddon(
+  addonId: string,
+  body: UpdateAddonRequest,
+): Promise<AdminAddonListItem> {
+  const response = await apiFetch(`/admin/catalog/addons/${addonId}`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw await readProblemDetail(response);
+  return (await response.json()) as AdminAddonListItem;
 }
