@@ -1,13 +1,24 @@
-import { CreditCard, TrendingUp, UserPlus, Users, Wallet } from "lucide-react";
+import { CreditCard, Heart, Repeat, TrendingDown, TrendingUp, UserPlus, Users, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDashboard, isDashboardPeriod, type DashboardPeriod } from "@/lib/api/dashboard";
 import KpiCard from "./KpiCard";
+import MetricCard from "./MetricCard";
 import OverdueCard from "./OverdueCard";
 import RevenueChart from "./RevenueChart";
 import PeriodSelector from "./PeriodSelector";
 import MethodDistribution from "./MethodDistribution";
 import TopModulesList from "./TopModulesList";
 import RecentSignupsList from "./RecentSignupsList";
+
+const currencyFormatter = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+  maximumFractionDigits: 0,
+});
+
+const pctFormatter = new Intl.NumberFormat("pt-BR", {
+  maximumFractionDigits: 1,
+});
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +43,38 @@ export default async function DashboardPage({ searchParams }: PageProps) {
         <KpiCard title="ARR" icon={TrendingUp} data={data.arr} format="currency" />
         <KpiCard title="Assinaturas ativas" icon={Users} data={data.activeSubscriptions} format="count" />
         <KpiCard title="Trials" icon={UserPlus} data={data.trials} format="count" />
+      </section>
+
+      <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <MetricCard
+          title="Churn rate"
+          icon={TrendingDown}
+          value={data.churnRatePct !== null ? `${pctFormatter.format(data.churnRatePct)}%` : "—"}
+          empty={data.churnRatePct === null}
+          hint="último mês"
+        />
+        <MetricCard
+          title="LTV estimado"
+          icon={Heart}
+          value={data.ltvCents !== null ? currencyFormatter.format(data.ltvCents / 100) : "—"}
+          empty={data.ltvCents === null}
+          hint="ARPU ÷ churn mensal"
+        />
+        <MetricCard
+          title="Conversão de trial"
+          icon={Repeat}
+          value={
+            data.trialConversion && data.trialConversion.started > 0
+              ? `${pctFormatter.format(data.trialConversion.pct)}%`
+              : "—"
+          }
+          empty={!data.trialConversion || data.trialConversion.started === 0}
+          hint={
+            data.trialConversion
+              ? `${data.trialConversion.converted} de ${data.trialConversion.started} (30d)`
+              : "30d"
+          }
+        />
       </section>
 
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
