@@ -1,6 +1,8 @@
 import { CreditCard, Heart, Repeat, TrendingDown, TrendingUp, UserPlus, Users, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDashboard, isDashboardPeriod, type DashboardPeriod } from "@/lib/api/dashboard";
+import BackfillButton from "./BackfillButton";
+import ChurnChart from "./ChurnChart";
 import KpiCard from "./KpiCard";
 import MetricCard from "./MetricCard";
 import OverdueCard from "./OverdueCard";
@@ -35,7 +37,10 @@ export default async function DashboardPage({ searchParams }: PageProps) {
     <main className="flex flex-1 flex-col gap-6 p-6 md:p-8">
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Dashboard</h1>
-        <PeriodSelector value={period} />
+        <div className="flex flex-wrap items-center gap-2">
+          <BackfillButton />
+          <PeriodSelector value={period} />
+        </div>
       </div>
 
       <section className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -115,6 +120,19 @@ export default async function DashboardPage({ searchParams }: PageProps) {
           </CardContent>
         </Card>
         <MethodDistribution rows={data.revenueByMethod} />
+      </section>
+
+      <section className="grid grid-cols-1 gap-4">
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Churn mensal últimos 12 meses
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ChurnChart points={data.churnLast12Months} />
+          </CardContent>
+        </Card>
       </section>
 
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
