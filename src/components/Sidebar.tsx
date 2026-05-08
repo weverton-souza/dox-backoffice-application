@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { GraduationCap, Package, Tag, Users } from "lucide-react";
+import { GraduationCap, LayoutDashboard, Package, Tag, Users } from "lucide-react";
 
 const NAV_ITEMS = [
+  { label: "Dashboard", href: "/", icon: LayoutDashboard },
   { label: "Tenants", href: "/tenants", icon: Users },
   { label: "Catálogo", href: "/catalog", icon: Package },
   { label: "Promoções", href: "/promotions", icon: Tag },
