@@ -50,6 +50,39 @@ export interface RecentSignupResponse {
   subscriptionStatus: SubscriptionStatus | null;
 }
 
+export interface TrialConversionResponse {
+  started: number;
+  converted: number;
+  pct: number;
+}
+
+export interface ChurnPointResponse {
+  year: number;
+  month: number;
+  churnRatePct: number;
+  canceled: number;
+  activeAtStart: number;
+}
+
+export interface RevenueSnapshotResponse {
+  year: number;
+  month: number;
+  mrrCents: number;
+  arrCents: number;
+  activeSubscriptions: number;
+  trialSubscriptions: number;
+  overdueAmountCents: number;
+  newSignups: number;
+  canceledSubscriptions: number;
+  trialStarted: number;
+  trialConverted: number;
+  capturedAt: string;
+}
+
+export interface BackfillSnapshotsResponse {
+  captured: RevenueSnapshotResponse[];
+}
+
 export interface AdminDashboardResponse {
   period: DashboardPeriod;
   periodStart: string;
@@ -59,8 +92,12 @@ export interface AdminDashboardResponse {
   activeSubscriptions: KpiCardResponse;
   trials: KpiCardResponse;
   signupsInPeriod: KpiCardResponse;
+  churnRatePct: number | null;
+  ltvCents: number | null;
+  trialConversion: TrialConversionResponse | null;
   overdue: OverdueResponse;
   revenueLast12Months: RevenuePointResponse[];
+  churnLast12Months: ChurnPointResponse[];
   revenueByMethod: MethodRevenueResponse[];
   topModulesByRevenue: ModuleRevenueResponse[];
   recentSignups: RecentSignupResponse[];
@@ -70,6 +107,14 @@ export async function getDashboard(period: DashboardPeriod = "CURRENT_MONTH"): P
   const response = await apiFetch(`/admin/dashboard?period=${period}`);
   if (!response.ok) throw await readProblemDetail(response);
   return (await response.json()) as AdminDashboardResponse;
+}
+
+export async function backfillSnapshots(months = 12): Promise<BackfillSnapshotsResponse> {
+  const response = await apiFetch(`/admin/dashboard/snapshots/backfill?months=${months}`, {
+    method: "POST",
+  });
+  if (!response.ok) throw await readProblemDetail(response);
+  return (await response.json()) as BackfillSnapshotsResponse;
 }
 
 export function isDashboardPeriod(value: string | undefined | null): value is DashboardPeriod {
