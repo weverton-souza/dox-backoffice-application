@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 import { Database, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { backfillSnapshots } from "@/lib/api/dashboard";
-import { ApiError } from "@/lib/api/client";
+import type { BackfillSnapshotsResponse } from "@/lib/api/dashboard-types";
 
 export default function BackfillButton() {
   const router = useRouter();
@@ -17,7 +16,14 @@ export default function BackfillButton() {
     if (submitting || isPending) return;
     setSubmitting(true);
     try {
-      const result = await backfillSnapshots(12);
+      const response = await fetch("/api/dashboard/snapshots/backfill?months=12", {
+        method: "POST",
+      });
+      if (!response.ok) {
+        const body = (await response.json().catch(() => ({}))) as { title?: string; detail?: string };
+        throw new Error(body.detail ?? body.title ?? "Erro inesperado");
+      }
+      const result = (await response.json()) as BackfillSnapshotsResponse;
       toast.success(`${result.captured.length} snapshots capturados`, {
         description: "Histórico mensal atualizado para os últimos 12 meses.",
       });
@@ -25,7 +31,7 @@ export default function BackfillButton() {
         router.refresh();
       });
     } catch (error) {
-      const message = error instanceof ApiError ? error.detail ?? error.title : "Erro inesperado";
+      const message = error instanceof Error ? error.message : "Erro inesperado";
       toast.error("Falha no backfill", { description: message });
     } finally {
       setSubmitting(false);

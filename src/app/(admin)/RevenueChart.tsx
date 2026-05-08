@@ -1,7 +1,7 @@
 "use client";
 
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import type { RevenuePointResponse } from "@/lib/api/dashboard";
+import type { RevenuePointResponse } from "@/lib/api/dashboard-types";
 
 interface RevenueChartProps {
   points: RevenuePointResponse[];

@@ -1,4 +1,4 @@
-import type { ModuleRevenueResponse } from "@/lib/api/dashboard";
+import type { ModuleRevenueResponse } from "@/lib/api/dashboard-types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrencyCents } from "@/lib/formatters";
 import { moduleDisplayName } from "@/lib/modules";

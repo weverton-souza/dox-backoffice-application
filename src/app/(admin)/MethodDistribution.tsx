@@ -1,4 +1,4 @@
-import type { MethodRevenueResponse } from "@/lib/api/dashboard";
+import type { MethodRevenueResponse } from "@/lib/api/dashboard-types";
 import type { BillingType } from "@/lib/api/tenants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrencyCents } from "@/lib/formatters";

@@ -1,6 +1,7 @@
 import { CreditCard, Heart, Repeat, TrendingDown, TrendingUp, UserPlus, Users, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getDashboard, isDashboardPeriod, type DashboardPeriod } from "@/lib/api/dashboard";
+import { getDashboard } from "@/lib/api/dashboard";
+import { isDashboardPeriod, type DashboardPeriod } from "@/lib/api/dashboard-types";
 import BackfillButton from "./BackfillButton";
 import ChurnChart from "./ChurnChart";
 import KpiCard from "./KpiCard";

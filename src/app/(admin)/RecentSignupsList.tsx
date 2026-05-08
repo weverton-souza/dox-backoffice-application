@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import type { RecentSignupResponse } from "@/lib/api/dashboard";
+import type { RecentSignupResponse } from "@/lib/api/dashboard-types";
 import type { SubscriptionStatus } from "@/lib/api/tenants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { DASHBOARD_PERIODS, type DashboardPeriod } from "@/lib/api/dashboard";
+import { DASHBOARD_PERIODS, type DashboardPeriod } from "@/lib/api/dashboard-types";
 import {
   Select,
   SelectContent,

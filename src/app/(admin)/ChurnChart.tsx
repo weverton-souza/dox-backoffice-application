@@ -1,7 +1,7 @@
 "use client";
 
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import type { ChurnPointResponse } from "@/lib/api/dashboard";
+import type { ChurnPointResponse } from "@/lib/api/dashboard-types";
 
 interface ChurnChartProps {
   points: ChurnPointResponse[];

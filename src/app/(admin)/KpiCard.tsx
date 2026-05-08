@@ -1,5 +1,5 @@
 import { ArrowDownRight, ArrowUpRight, Minus, type LucideIcon } from "lucide-react";
-import type { KpiCardResponse } from "@/lib/api/dashboard";
+import type { KpiCardResponse } from "@/lib/api/dashboard-types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 

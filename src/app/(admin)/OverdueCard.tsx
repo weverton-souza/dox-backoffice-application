@@ -1,5 +1,5 @@
 import { AlertTriangle } from "lucide-react";
-import type { OverdueResponse } from "@/lib/api/dashboard";
+import type { OverdueResponse } from "@/lib/api/dashboard-types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrencyCents } from "@/lib/formatters";
 
