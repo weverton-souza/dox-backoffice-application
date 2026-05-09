@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import AddonRowActions from "./AddonRowActions";
+import NewAddonButton from "./NewAddonButton";
 
 const TYPE_LABEL: Record<AddonType, string> = {
   MODULE: "Módulo",
@@ -37,8 +38,12 @@ export default async function CatalogAddonsPage() {
   const addons = await listCatalogAddons();
 
   return (
-    <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-      <Table>
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-end">
+        <NewAddonButton />
+      </div>
+      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+        <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Nome</TableHead>
@@ -107,6 +112,7 @@ export default async function CatalogAddonsPage() {
           ))}
         </TableBody>
       </Table>
+      </div>
     </div>
   );
 }
