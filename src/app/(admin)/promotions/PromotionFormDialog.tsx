@@ -50,6 +50,21 @@ const PROMOTION_TYPES: PromotionType[] = [
   "ANNIVERSARY",
 ];
 
+const PROMOTION_TYPE_LABEL: Record<PromotionType, string> = {
+  COUPON: "Cupom",
+  BUNDLE: "Bundle",
+  GRANT: "Concessão administrativa",
+  REFERRAL: "Indicação",
+  LOYALTY: "Fidelidade",
+  WINBACK: "Recuperação",
+  CAMPAIGN: "Campanha",
+  PARTNER: "Parceiro",
+  TRIAL_EXTENSION: "Extensão de trial",
+  VOLUME_DISCOUNT: "Desconto por volume",
+  CROSS_SELL: "Cross-sell",
+  ANNIVERSARY: "Aniversário",
+};
+
 const DISCOUNT_TYPES: DiscountType[] = [
   "PERCENTAGE",
   "FIXED_AMOUNT",
@@ -57,8 +72,29 @@ const DISCOUNT_TYPES: DiscountType[] = [
   "TRIAL_EXTENSION_DAYS",
 ];
 
+const DISCOUNT_TYPE_LABEL: Record<DiscountType, string> = {
+  PERCENTAGE: "Percentual (%)",
+  FIXED_AMOUNT: "Valor fixo (R$)",
+  FREE_MONTHS: "Meses grátis",
+  TRIAL_EXTENSION_DAYS: "Dias extras de trial",
+};
+
 const DURATION_TYPES: DurationType[] = ["ONCE", "FOREVER", "FIXED_MONTHS"];
+
+const DURATION_TYPE_LABEL: Record<DurationType, string> = {
+  ONCE: "Uma vez (primeira cobrança)",
+  FOREVER: "Para sempre",
+  FIXED_MONTHS: "Por N meses",
+};
+
 const APPLIES_TO: AppliesTo[] = ["ALL_MODULES", "SPECIFIC_MODULES", "MIN_BUNDLE", "FIRST_PAYMENT_ONLY"];
+
+const APPLIES_TO_LABEL: Record<AppliesTo, string> = {
+  ALL_MODULES: "Todos os módulos",
+  SPECIFIC_MODULES: "Módulos específicos",
+  MIN_BUNDLE: "Bundle mínimo",
+  FIRST_PAYMENT_ONLY: "Apenas no primeiro pagamento",
+};
 
 const schema = z.object({
   code: z.string().max(60).optional(),
@@ -232,7 +268,7 @@ export default function PromotionFormDialog({ promotion, open, onClose }: Props)
                 <SelectContent>
                   {PROMOTION_TYPES.map((t) => (
                     <SelectItem key={t} value={t}>
-                      {t}
+                      {PROMOTION_TYPE_LABEL[t]}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -251,7 +287,7 @@ export default function PromotionFormDialog({ promotion, open, onClose }: Props)
                 <SelectContent>
                   {DISCOUNT_TYPES.map((t) => (
                     <SelectItem key={t} value={t}>
-                      {t}
+                      {DISCOUNT_TYPE_LABEL[t]}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -286,7 +322,7 @@ export default function PromotionFormDialog({ promotion, open, onClose }: Props)
                 <SelectContent>
                   {DURATION_TYPES.map((t) => (
                     <SelectItem key={t} value={t}>
-                      {t}
+                      {DURATION_TYPE_LABEL[t]}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -339,7 +375,7 @@ export default function PromotionFormDialog({ promotion, open, onClose }: Props)
               <SelectContent>
                 {APPLIES_TO.map((t) => (
                   <SelectItem key={t} value={t}>
-                    {t}
+                    {APPLIES_TO_LABEL[t]}
                   </SelectItem>
                 ))}
               </SelectContent>
