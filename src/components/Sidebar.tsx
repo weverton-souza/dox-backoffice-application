@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { GraduationCap, LayoutDashboard, Package, Tag, Users } from "lucide-react";
+import {
+  BookOpen,
+  GraduationCap,
+  LayoutDashboard,
+  Package,
+  Tag,
+  Users,
+} from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -8,6 +15,8 @@ const NAV_ITEMS = [
   { label: "Promoções", href: "/promotions", icon: Tag },
   { label: "Estudantes", href: "/students", icon: GraduationCap },
 ];
+
+const FOOTER_ITEMS = [{ label: "Guia de termos", href: "/guia", icon: BookOpen }];
 
 export default function Sidebar() {
   return (
@@ -27,6 +36,18 @@ export default function Sidebar() {
           </Link>
         ))}
       </nav>
+      <div className="border-t border-border p-3">
+        {FOOTER_ITEMS.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          >
+            <item.icon className="h-4 w-4" />
+            {item.label}
+          </Link>
+        ))}
+      </div>
     </aside>
   );
 }

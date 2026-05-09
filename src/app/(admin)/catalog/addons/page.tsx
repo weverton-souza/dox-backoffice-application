@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import TermHint from "@/components/TermHint";
 import AddonRowActions from "./AddonRowActions";
 import NewAddonButton from "./NewAddonButton";
 
@@ -46,13 +47,23 @@ export default async function CatalogAddonsPage() {
         <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Nome</TableHead>
-            <TableHead>Tipo</TableHead>
-            <TableHead>Target</TableHead>
+            <TableHead>
+              <span className="inline-flex items-center">Nome<TermHint termId="addon" /></span>
+            </TableHead>
+            <TableHead>
+              <span className="inline-flex items-center">Tipo<TermHint termId="module_addon" /></span>
+            </TableHead>
+            <TableHead>
+              <span className="inline-flex items-center">Target<TermHint termId="target_module" /></span>
+            </TableHead>
             <TableHead className="text-right">Mensal</TableHead>
             <TableHead className="text-right">Unitário</TableHead>
-            <TableHead className="text-right">Fee</TableHead>
-            <TableHead>Disponível em</TableHead>
+            <TableHead className="text-right">
+              <span className="inline-flex items-center justify-end">Fee<TermHint termId="percentage_fee_addon" /></span>
+            </TableHead>
+            <TableHead>
+              <span className="inline-flex items-center">Disponível em<TermHint termId="available_for_bundles" /></span>
+            </TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Atualizado</TableHead>
             <TableHead className="w-[60px]" />
