@@ -263,7 +263,9 @@ export default function PromotionFormDialog({ promotion, open, onClose }: Props)
                 disabled={isEdit}
               >
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue>
+                    {(value: string) => PROMOTION_TYPE_LABEL[value as PromotionType] ?? value}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {PROMOTION_TYPES.map((t) => (
@@ -282,7 +284,9 @@ export default function PromotionFormDialog({ promotion, open, onClose }: Props)
                 disabled={isEdit}
               >
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue>
+                    {(value: string) => DISCOUNT_TYPE_LABEL[value as DiscountType] ?? value}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {DISCOUNT_TYPES.map((t) => (
@@ -317,7 +321,9 @@ export default function PromotionFormDialog({ promotion, open, onClose }: Props)
                 disabled={isEdit}
               >
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue>
+                    {(value: string) => DURATION_TYPE_LABEL[value as DurationType] ?? value}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {DURATION_TYPES.map((t) => (
@@ -370,7 +376,9 @@ export default function PromotionFormDialog({ promotion, open, onClose }: Props)
               disabled={isEdit}
             >
               <SelectTrigger>
-                <SelectValue />
+                <SelectValue>
+                  {(value: string) => APPLIES_TO_LABEL[value as AppliesTo] ?? value}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {APPLIES_TO.map((t) => (
