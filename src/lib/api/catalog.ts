@@ -109,6 +109,38 @@ export async function listModulePriceHistory(
   return (await response.json()) as AdminModulePriceResponse[];
 }
 
+export interface CreateBundleRequest {
+  id: string;
+  name: string;
+  description?: string | null;
+  modules: string[];
+  priceMonthlyCents: number;
+  priceYearlyCents: number;
+  seatsIncluded: number;
+  trackingSlotsIncluded: number;
+  highlighted: boolean;
+  sortOrder: number;
+  notes?: string | null;
+}
+
+export interface CreateAddonRequest {
+  id: string;
+  name: string;
+  description?: string | null;
+  type: AddonType;
+  targetModuleId?: string | null;
+  priceMonthlyCents: number;
+  priceUnitCents?: number | null;
+  feePercentage?: string | null;
+  availableForBundles: string[];
+  sortOrder: number;
+  notes?: string | null;
+}
+
+export interface ArchiveCatalogRequest {
+  notes?: string | null;
+}
+
 export async function listCatalogBundles(): Promise<AdminBundleListItem[]> {
   const response = await apiFetch("/admin/catalog/bundles");
   if (!response.ok) throw await readProblemDetail(response);
@@ -127,6 +159,27 @@ export async function updateBundle(
   return (await response.json()) as AdminBundleListItem;
 }
 
+export async function createBundle(body: CreateBundleRequest): Promise<AdminBundleListItem> {
+  const response = await apiFetch("/admin/catalog/bundles", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw await readProblemDetail(response);
+  return (await response.json()) as AdminBundleListItem;
+}
+
+export async function archiveBundle(
+  bundleId: string,
+  body: ArchiveCatalogRequest = {},
+): Promise<AdminBundleListItem> {
+  const response = await apiFetch(`/admin/catalog/bundles/${bundleId}/archive`, {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw await readProblemDetail(response);
+  return (await response.json()) as AdminBundleListItem;
+}
+
 export async function listCatalogAddons(): Promise<AdminAddonListItem[]> {
   const response = await apiFetch("/admin/catalog/addons");
   if (!response.ok) throw await readProblemDetail(response);
@@ -139,6 +192,27 @@ export async function updateAddon(
 ): Promise<AdminAddonListItem> {
   const response = await apiFetch(`/admin/catalog/addons/${addonId}`, {
     method: "PUT",
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw await readProblemDetail(response);
+  return (await response.json()) as AdminAddonListItem;
+}
+
+export async function createAddon(body: CreateAddonRequest): Promise<AdminAddonListItem> {
+  const response = await apiFetch("/admin/catalog/addons", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw await readProblemDetail(response);
+  return (await response.json()) as AdminAddonListItem;
+}
+
+export async function archiveAddon(
+  addonId: string,
+  body: ArchiveCatalogRequest = {},
+): Promise<AdminAddonListItem> {
+  const response = await apiFetch(`/admin/catalog/addons/${addonId}/archive`, {
+    method: "POST",
     body: JSON.stringify(body),
   });
   if (!response.ok) throw await readProblemDetail(response);

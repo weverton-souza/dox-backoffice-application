@@ -11,22 +11,36 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import TermHint from "@/components/TermHint";
 import BundleRowActions from "./BundleRowActions";
+import NewBundleButton from "./NewBundleButton";
 
 export default async function CatalogBundlesPage() {
   const bundles = await listCatalogBundles();
 
   return (
-    <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
-      <Table>
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-end">
+        <NewBundleButton />
+      </div>
+      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+        <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Nome</TableHead>
-            <TableHead>Módulos</TableHead>
+            <TableHead>
+              <span className="inline-flex items-center">Nome<TermHint termId="bundle" /></span>
+            </TableHead>
+            <TableHead>
+              <span className="inline-flex items-center">Módulos<TermHint termId="module" /></span>
+            </TableHead>
             <TableHead className="text-right">Mensal</TableHead>
             <TableHead className="text-right">Anual</TableHead>
-            <TableHead className="text-right">Seats</TableHead>
-            <TableHead className="text-right">Tracking</TableHead>
+            <TableHead className="text-right">
+              <span className="inline-flex items-center justify-end">Seats<TermHint termId="seats" /></span>
+            </TableHead>
+            <TableHead className="text-right">
+              <span className="inline-flex items-center justify-end">Tracking<TermHint termId="tracking" /></span>
+            </TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Atualizado</TableHead>
             <TableHead className="w-[60px]" />
@@ -78,6 +92,7 @@ export default async function CatalogBundlesPage() {
           ))}
         </TableBody>
       </Table>
+      </div>
     </div>
   );
 }
